@@ -1,0 +1,79 @@
+#left_panel{
+  animation: left_panel_open 2s ease-out 3s 1 forwards;
+}
+#left_panel:hover, #left_panel.active{
+  /*animation: left_panel_focus 2s ease-out 0s 1 forwards;*/
+}
+
+#right_panel{
+  animation: right_panel_open 2s ease-out 3s 1 forwards;
+}
+#right_panel:hover, #right_panel.active{
+  /*animation: right_panel_focus 2s ease-out 0s 1 forwards;*/
+}
+
+@keyframes left_panel_open {
+  to {
+    transform: translateX(-45%);
+  }
+}
+
+@keyframes left_panel_focus {
+  from {
+    transform: translateX(-45%);
+  }
+  to {
+    transform: translateX(-35%);
+  }
+}
+
+@keyframes right_panel_open {
+  to {
+    transform: translateX(45%);
+  }
+}
+@keyframes right_panel_focus {
+  from {
+    transform: translateX(45%);
+  }
+  to {
+    transform: translateX(35%);
+  }
+}
+
+.aperture_blade {
+  animation-delay: 10s;
+  animation: aperture_motion 2s linear 5s 1 forwards;
+}
+.aperture_blade:nth-of-type(1n) {
+  transform-origin: 0 0;
+}
+.aperture_blade:nth-of-type(2n) {
+  transform-origin: 50% -20.71%;
+}
+.aperture_blade:nth-of-type(3n) {
+  transform-origin: 100% 0;
+}
+.aperture_blade:nth-of-type(4n) {
+  transform-origin: 100% 100%;
+}
+.aperture_blade:nth-of-type(5n) {
+  transform-origin: 50% 120.71%;
+}
+.aperture_blade:nth-of-type(6n) {
+  transform-origin: 0 100%;
+}
+
+@keyframes aperture_motion {
+  to {
+    transform: scale(0);
+  }
+}
+
+.aperture_blade{
+
+}
+
+.aura{
+  filter: url(#sofGlow);
+}

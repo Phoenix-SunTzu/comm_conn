@@ -1,0 +1,72 @@
+<!doctype html>
+
+<html>
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ page.title }}</title>
+
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/atmosphere.css" />
+
+    <!-- SPELLS -->
+    <script src="/javascripts/snap.svg-min.js"></script>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/fontawesome-321b2c7753.js"></script>
+    <script>
+        function StringBuilder(){
+            var _string = arguments[0] || '';
+
+            for (var i=1; i < arguments.length; i++) {
+                var symbol = '%' + i;
+                var replacement = arguments[i] || 0;
+                _string = _string.replace(symbol, replacement);
+            }
+            return _string;
+        }
+
+        function StringCombiner(){
+            var _string = arguments[0] || '';
+
+            for (var i=1; i < arguments.length; i++) {
+                _string += ' ' + arguments[i];
+            }
+            return _string;
+        }
+    </script>
+</head>
+
+<body>
+
+<!-- Page Container -->
+<div id="content_body">
+    <div id="stage">
+        <div class="layer_01"></div>
+        <div class="layer_02">
+            <div class="clouds"></div>
+        </div>
+        <div class="layer_03">
+            <div class="stars"></div>
+            <div class="twinkling"></div>
+        </div>
+        <div class="layer_04"></div>
+        <div class="layer_05"></div>
+        <div class="layer_06"></div>
+        <div class="layer_07"></div>
+        <div class="layer_08"></div>
+        <div class="layer_09"></div>
+
+    </div>
+    {{{body}}}
+    <div id="isolation_layer"></div>
+</div>
+
+<!-- System Footer -->
+<div id="footer" class="text-center text-muted">
+    <p>Another solution by <a href="http://www.linkedin.com/in/PhoenixSoul">the mechanic</a>.</p>
+</div>
+</body>
+</html>

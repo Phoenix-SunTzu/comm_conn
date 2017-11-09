@@ -1,0 +1,57 @@
+html{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+body {
+  height: 100%; width: 100%;
+  padding: 0 !important; margin: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#content_body{
+  height: 100%;
+}
+#paper{
+  position: fixed;
+  height: 100%; width: 100%;
+}
+#footer{
+  text-align: right;
+}
+a {
+  color: #00B7FF;
+}
+
+.star .star_ray1{
+  /*stroke: red;*/
+  filter: url('#blur_1_1');
+}
+.star .star_ray2{
+  /*stroke: red;*/
+  filter: url('#blur_1_3');
+}
+
+.star .star_point{
+  fill: white;
+  filter: url('#blur_1_1');
+}
+
+.star_point_set:hover{
+  cursor: pointer;
+}
+
+.star_point_set .ring{
+  filter: url('#sofGlow');
+  fill: 'transparent';
+
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: draw_path 3s ease-out forwards;
+}
+
+@keyframes draw_path {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

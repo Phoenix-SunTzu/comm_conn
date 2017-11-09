@@ -1,0 +1,144 @@
+
+<link rel="stylesheet" href="/stylesheets/list_display.css" />
+
+<style>
+
+</style>
+
+<!-- <script src="/javascripts/ui/bubble.js"></script> -->
+<!--<script src="/javascripts/ui/star_point.js"></script>-->
+
+<svg id="paper" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="bottom_fade_gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0.75" stop-color="#fff" stop-opacity="1" />
+            <stop offset="1" stop-color="#fff" stop-opacity="0" />
+        </linearGradient>
+        <mask id="bottom_fade" x="0" y="0" width="100%" height="100%" maskUnits="userSpaceOnUse" >
+            <rect x="0" y="0" width="100%" height="100%" fill="url(#bottom_fade_gradient)"  />
+        </mask>
+        <linearGradient id="list_gradient" x1="50%" y1="0%" x2="100%" y2="50%">
+            <stop offset="0" stop-color="silver" stop-opacity="0.2" />
+            <stop offset="1" stop-color="gold" stop-opacity="0.2" />
+        </linearGradient>
+        <linearGradient id="panel_gradient" x1="0%" y1="50%" x2="100%" y2="50%">
+            <stop offset="0" stop-color="#777" stop-opacity="1" />
+            <stop offset="0.08" stop-color="#035096" stop-opacity="0.97" />
+            <stop offset="0.15" stop-color="#035096" stop-opacity=".75" />
+            <stop offset="0.25" stop-color="#035096" stop-opacity=".60" />
+            <stop offset="0.75" stop-color="#035096" stop-opacity="0.1" />
+            <stop offset="1" stop-color="silver" stop-opacity="0" />
+        </linearGradient>
+
+
+        <filter id="sofGlow" height="300%" width="300%" x="-75%" y="-75%">
+            <!-- Thicken out the original shape -->
+            <feMorphology operator="dilate" radius="4" in="SourceAlpha" result="thicken" />
+
+            <!-- Use a gaussian blur to create the soft blurriness of the glow -->
+            <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
+
+            <!-- Change the colour -->
+            <feFlood flood-color="#035096" result="glowColor" />
+
+            <!-- Color in the glows -->
+            <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
+
+            <!--	Layer the effects together -->
+            <feMerge>
+                <feMergeNode in="softGlow_colored"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+
+        </filter>
+    </defs>
+</svg>
+
+<script>
+
+    var list_display = {
+        draw: function() {
+            var list_path_string_left_boundary = StringBuilder('M %1,%2 C %3,%4 %5,%6 %7,%8 S %9,%10, %11,%12',  (-0.90 * paper.viewBox_width), (-0.19 * paper.viewBox_width), paper.offset_x, paper.offset_y - (0.1 * paper.viewBox_width), paper.offset_x + (0.125 * paper.viewBox_width), paper.offset_y, paper.offset_x + (0.075 * paper.viewBox_width), paper.offset_y + (0.075 * paper.viewBox_width), paper.offset_x - (0.03 * paper.viewBox_width), paper.offset_y + ((0.37) * paper.viewBox_height), paper.offset_x + ((0.01) * paper.viewBox_width), paper.offset_y + ((1.0) * paper.viewBox_height));
+            var list_path_string_bottom_boundary = StringBuilder('L %1,%2', paper.offset_x + ((0.24) * paper.viewBox_width), paper.offset_y + ((1.0) * paper.viewBox_height));
+            var list_path_string_right_boundary = StringBuilder('C %1,%2 %3,%4 %5,%6 S %7,%8, %9,%10', paper.offset_x + (0.09 * paper.viewBox_width), paper.offset_y + ((0.37) * paper.viewBox_height), paper.offset_x + (0.19 * paper.viewBox_width), paper.offset_y + (0.14 * paper.viewBox_width), paper.offset_x + (0.18 * paper.viewBox_width), paper.offset_y + (0.075 * paper.viewBox_width), paper.offset_x - (0.07 * paper.viewBox_width), paper.offset_y - (0.17 * paper.viewBox_width), (-0.90 * paper.viewBox_width), (-0.19 * paper.viewBox_width));
+            var list_boundary_path_string = StringCombiner(list_path_string_left_boundary, list_path_string_bottom_boundary, list_path_string_right_boundary);
+
+            // Display the List Background
+            if(this.display) this.display.remove();
+            this.display = paper.g(paper.path(list_boundary_path_string).attr({mask: 'url(#bottom_fade)'}).attr({stroke: 'silver', 'stroke-width': 17, fill: 'url(#list_gradient)'}).addClass('aura'));
+
+            // Set the List Items Origin Path
+            var list_items_origin_path = paper.path(list_path_string_left_boundary).attr({stroke: 'transparent', 'stroke-width': 1, fill: 'transparent'});
+            this.display.add(list_items_origin_path);
+            var liop_length = list_items_origin_path.getTotalLength();
+            var display_entry_point = {};
+            for(i = 0;i<=liop_length;i++){
+                var _point =  list_items_origin_path.getPointAtLength(i);
+                if(_point.x >= paper.offset_x && _point.y >= paper.offset_y){
+                    display_entry_point = _point;
+                }
+            }
+            var list_length = 0;
+            var list_max = 20;
+            for(i=1;i<=list_length;i++){
+                var distance_magnitude = (i>list_max) ? 1 : (i/list_max);
+                var liop_distance = ((liop_length * distance_magnitude) * distance_magnitude);
+                var liop_point = list_items_origin_path.getPointAtLength(liop_distance);
+                var width = (lipr_point.x - liop_point.x);
+                var list_item = paper.g(
+                    paper.rect(liop_point.x,liop_point.y, width, (width * 0.30)).attr({fill: 'silver', 'fill-opacity': 1}),
+                    paper.rect(liop_point.x,liop_point.y, width / 3, (width * 0.30)).attr({fill: 'goldenrod', 'fill-opacity': 1})
+                );
+                this.display.add(list_item);
+            }
+        }
+    };
+
+    var display_panel = {
+        draw: function(){
+            if(this.display) this.display.remove();
+            this.display = paper.g();
+            var panel_boundary = paper.rect((paper.offset_x + paper.viewBox_width * 0.17), (paper.offset_y + paper.viewBox_height * 0.05), (paper.viewBox_width * 0.80), (paper.viewBox_height * 0.8), 5, 5).attr({stroke: 'silver', 'stroke-width': 17, fill: 'url(#panel_gradient)'});
+            this.display.add(panel_boundary);
+        }
+    };
+
+    var parent_star = {
+        draw: function(){
+            if(this.display) this.display.remove();
+            this.display = paper.g();
+            var star_body = paper.circle((-0.90) * paper.viewBox_width,(-0.19) * paper.viewBox_width, paper.viewBox_width).attr({fill: 'red'});
+            this.display.add(star_body);
+        }
+    };
+
+    var paper = Snap('#paper').attr({preserveAspectRatio:'xMidYMid slice'});
+    var width = $('#paper').width();
+    var height = $('#paper').height();
+    paper.offset_x = (width >= height) ? 0 : (height - width) / 2;
+    paper.offset_y = (height > width) ? 0 : (height - width) / 2;
+    paper.viewBox_width = (width >= height) ? 10000 : (10000 / height) * width;
+    paper.viewBox_height = (height > width) ? 10000 : (10000 / width) * height;
+
+    $(window).resize(function(){
+        var width = $('#paper').width();
+        var height = $('#paper').height();
+
+        paper.offset_x = (width >= height) ? 0 : (height - width) / -2;
+        paper.offset_y = (height > width) ? 0 : (height - width) / -2;
+        paper.viewBox_width = (width >= height) ? 10000 : (10000 / height) * width;
+        paper.viewBox_height = (height > width) ? 10000 : (10000 / width) * height;
+
+        var viewBox_attributes = StringBuilder("%1 %2 %3 %4", paper.offset_x, paper.offset_y, paper.viewBox_width, paper.viewBox_height);
+
+        paper.attr({viewBox: viewBox_attributes});
+
+
+        list_display.draw();
+        parent_star.draw();
+        display_panel.draw();
+
+    }).resize();
+
+
+</script>

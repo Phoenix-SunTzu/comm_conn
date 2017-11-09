@@ -1,0 +1,42 @@
+
+<link rel="stylesheet" href="/stylesheets/presentation.css" />
+
+<style>
+
+</style>
+
+<!-- <script src="/javascripts/ui/bubble.js"></script> -->
+<!--<script src="/javascripts/ui/star_point.js"></script>-->
+
+<svg id="paper" xmlns="http://www.w3.org/2000/svg"></svg>
+
+<script>
+
+
+    var paper = Snap('#paper').attr({preserveAspectRatio:'xMidYMid slice'});
+    $('#paper').resize(function(){
+        var width = $(this).width();
+        var height = $(this).height();
+
+        paper.offset_x = (width >= height) ? 0 : (height - width) / 2;
+        paper.offset_y = (height > width) ? 0 : (height - width) / 2;
+        paper.viewBox_width = (width >= height) ? 10000 : (10000 / height) * width;
+        paper.viewBox_height = (height > width) ? 10000 : (10000 / width) * height;
+
+        var viewBox_attributes = StringBuilder("%1 %2 %3 %4", paper.offset_x, paper.offset_y, paper.viewBox_width, paper.viewBox_height);
+
+        paper.attr({viewBox: viewBox_attributes});
+    }).resize();
+
+    var aperture = paper.g();
+    aperture.add(paper.circle(0,0,7071).addClass('aperture_blade').attr({fill: '#333333', stroke: 'silver'}));
+    aperture.add(paper.circle(5000, -2071, 7071).addClass('aperture_blade').attr({fill: '#333333', stroke: 'silver'}));
+    aperture.add(paper.circle(10000,0,7071).addClass('aperture_blade').attr({fill: '#333333', stroke: 'silver'}));
+    aperture.add(paper.circle(10000,10000,7071).addClass('aperture_blade').attr({fill: '#333333', stroke: 'silver'}));
+    aperture.add(paper.circle(5000,12071,7071).addClass('aperture_blade').attr({fill: '#333333', stroke: 'silver'}));
+    aperture.add(paper.circle(0,10000,7071).addClass('aperture_blade').attr({fill: '#333333', stroke: 'silver'}));
+    var left_panel = paper.polygon(0,0,6000,0,4000,10000,0,10000,0,0).attr({id: 'left_panel', fill: 'darkred'});
+    var right_panel = paper.polygon(6000,0, 10000,0, 10000,10000, 4000,10000, 6000,0).attr({id: 'right_panel', fill: '#111'});
+
+
+</script>

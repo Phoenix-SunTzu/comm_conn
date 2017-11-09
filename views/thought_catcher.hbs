@@ -1,0 +1,88 @@
+
+<style>
+
+</style>
+
+<!-- <script src="/javascripts/ui/bubble.js"></script> -->
+<script src="/javascripts/ui/star_point.js"></script>
+
+<svg id="paper" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="blur_3_1" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="3,1"></feGaussianBlur></filter>
+        <filter id="blur_1_3" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1,3"></feGaussianBlur></filter>
+        <filter id="blur_1_1" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1,1"></feGaussianBlur></filter>
+        <filter id="blur_1_2" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1,2"></feGaussianBlur></filter>
+        <filter id="blur_2_1" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="2,1"></feGaussianBlur></filter>
+        <filter id="blur_2_2" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="2,2"></feGaussianBlur></filter>
+        <filter id="blur_3_3" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="3,3"></feGaussianBlur></filter>
+        <filter id="aura" filterUnits="userSpaceOnUse">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="2"></feGaussianBlur>
+            <feOffset dx="10" dy="10" result="offsetblur"></feOffset>
+            <feFlood flood-color="#daa520"></feFlood>
+            <feComposite in2="offsetblur" operator="in"></feComposite>
+            <feComponentTransfer>
+                <feFuncA type="linear" slope="0.4"></feFuncA>
+            </feComponentTransfer>
+            <feMerge>
+                <feMergeNode></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter id="sofGlow" height="300%" width="300%" x="-75%" y="-75%">
+            <!-- Thicken out the original shape -->
+            <feMorphology operator="dilate" radius="4" in="SourceAlpha" result="thicken" />
+
+            <!-- Use a gaussian blur to create the soft blurriness of the glow -->
+            <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
+
+            <!-- Change the colour -->
+            <feFlood flood-color="rgb(0,186,255)" result="glowColor" />
+
+            <!-- Color in the glows -->
+            <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
+
+            <!--	Layer the effects together -->
+            <feMerge>
+                <feMergeNode in="softGlow_colored"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+
+        </filter>
+
+
+    </defs>
+
+
+</svg>
+
+<script>
+
+    var constellation = [];
+
+    var desk = $('#paper').parent();
+    var paper = Snap('#paper');
+    paper.click(function(){
+        //Snap.getElementByPoint(arguments[0].layerX , arguments[0].layerY);
+        var point_label = 'X: ' + arguments[0].layerX + '   Y: ' + arguments[0].layerY;
+        point_at.attr({text: point_label});
+
+        if(arguments[0].currentTarget == arguments[0].target) {
+            var origin = {
+                x: arguments[0].layerX,
+                y: arguments[0].layerY
+            };
+            var star_point_canvas = paper.svg(origin.x, origin.y, 100, 100, 0, 0, 100, 100);
+            star_point_canvas.add
+            constellation.push(new star_point(origin.x, origin.y));
+        } else {
+
+        }
+    });
+
+    paper.circle(60, 45, 75).attr({
+        fill: 'goldenrod'
+    });
+    var point_at = paper.text(25, 45, "");
+
+
+</script>

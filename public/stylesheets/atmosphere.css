@@ -1,0 +1,178 @@
+html 					{ overflow-y:scroll; }
+body {
+  padding-top:50px;
+
+}
+
+
+
+.apollo{
+  position: fixed; bottom: 0px; left: 0px;
+  opacity: .6;
+}
+
+.main_display{
+  position: relative;
+}
+
+.shear_bg {
+  background-color: transparent !important;
+  background-image: url('../images/shear_011_0000FF.png');
+}
+
+
+
+#content_body{
+  position: relative;
+}
+
+#footer{
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+}
+
+#isolation_layer{
+  position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 9998;
+  background: url('../images/shear_011_0000FF.png'), url('../images/shear_042_000000.png');
+  display: none;
+}
+#isolation_layer.show{
+  display: block;
+}
+
+#stage{
+  position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  /* Stage layers occupy z-index(-10 thru -1); stage == layer_00 */
+  background-color: #111111;
+  background-color: #000;
+}
+#stage .clouds, #stage .stars, #stage .twinkling  {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+#stage .clouds{
+  background:transparent url(../images/clouds.png) repeat top center;
+
+  -moz-animation:move-clouds-back 111s linear infinite;
+  -ms-animation:move-clouds-back 111s linear infinite;
+  -o-animation:move-clouds-back 111s linear infinite;
+  -webkit-animation:move-clouds-back 111s linear infinite;
+  animation:move-clouds-back 111s linear infinite;
+}
+
+#stage .stars {
+  background: transparent url(../images/stars.png) repeat top center;
+}
+
+#stage .twinkling{
+  background: transparent url(../images/twinkling.png) repeat top center;
+
+  -moz-animation:move-twink-back 1000s linear infinite;
+  -ms-animation:move-twink-back 1000s linear infinite;
+  -o-animation:move-twink-back 1000s linear infinite;
+  -webkit-animation:move-twink-back 1000s linear infinite;
+  animation:move-twink-back 1000s linear infinite;
+}
+#stage .screen_flash {
+  background: url('../images/honeycomb_flash.png') no-repeat;
+  background-position: 150%;
+  animation: screen_flash 3333ms;
+  animation-iteration-count: 1;
+  animation-delay: 3s;
+  opacity: .3333;
+}
+
+#stage .layer_01{
+  position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  z-index: -9;	/* Layer #1: z-index -9 */
+}
+#stage .layer_02{
+  position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  z-index: -8;	/* Layer #2: z-index -8 */
+}
+#stage .layer_03{
+  position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  z-index: -7;	/* Layer #3: z-index -7 */
+  background: url('../images/honeycomb_invert.png');
+}
+#stage .layer_04{
+  position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  z-index: -6;	/* Layer #4: z-index -6 */
+}
+#stage .layer_05{
+  position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  z-index: -5;	/* Layer #5: z-index -5 */
+}
+#stage .layer_06{
+  position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  z-index: -4;	/* Layer #6: z-index -4 */
+}
+#stage .layer_07{
+  position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  z-index: -3;	/* Layer #7: z-index -3 */
+}
+#stage .layer_08{
+  position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  z-index: -2;	/* Layer #8: z-index -2 */
+}
+#stage .layer_09{
+  position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;
+  z-index: -1;	/* Layer #9: z-index -1 */
+  background: url('../images/honeycomb_lines.png');
+  opacity: .03;
+}
+
+
+
+@keyframes button_hover {
+  0%   {height: 3.25pc; width: 2pc;bottom: 2pc; right: 2pc;}
+  100% {height: 4pc; width: 3pc;bottom: 1.625pc; right: 1.5pc;}
+}
+
+@keyframes screen_flash {
+  0%   {background-position-x: -30%;}
+  100% {background-position-x: 130%}
+}
+
+/* Stars and their twinkle  */
+@keyframes move-twink-back {
+  from {background-position:0 0;}
+  to {background-position:-10000px 5000px;}
+}
+@-webkit-keyframes move-twink-back {
+  from {background-position:0 0;}
+  to {background-position:-10000px 5000px;}
+}
+@-moz-keyframes move-twink-back {
+  from {background-position:0 0;}
+  to {background-position:-10000px 5000px;}
+}
+@-ms-keyframes move-twink-back {
+  from {background-position:0 0;}
+  to {background-position:-10000px 5000px;}
+}
+/* Clouds */
+@keyframes move-clouds-back {
+  from {background-position:0 0;}
+  to {background-position:10000px 0;}
+}
+@-webkit-keyframes move-clouds-back {
+  from {background-position:0 0;}
+  to {background-position:10000px 0;}
+}
+@-moz-keyframes move-clouds-back {
+  from {background-position:0 0;}
+  to {background-position:10000px 0;}
+}
+@-ms-keyframes move-clouds-back {
+  from {background-position: 0;}
+  to {background-position:10000px 0;}
+}
+
